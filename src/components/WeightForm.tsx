@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addEntry } from "../lib/weightApi";
 import { queryKeys } from "../lib/queryKeys";
+import DatePicker from "./DatePicker";
 
 interface Props {
   onSaved: () => void;
@@ -39,26 +40,12 @@ export default function WeightForm({ onSaved }: Props) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label
-              htmlFor="date"
               className="text-sm font-medium"
               style={{ color: "var(--color-foreground)" }}
             >
               Date
             </label>
-            <input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              max={today}
-              required
-              className="w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2"
-              style={{
-                borderColor: "var(--color-border)",
-                backgroundColor: "var(--color-background)",
-                color: "var(--color-foreground)",
-              }}
-            />
+            <DatePicker value={date} onChange={setDate} max={today} />
           </div>
           <div className="space-y-1.5">
             <label

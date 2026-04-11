@@ -59,7 +59,7 @@ Produces a native binary in `src-tauri/target/release/` and platform packages in
 
 Weight entries are stored in a SQLite database at:
 
-- **Linux**: `~/.local/share/com.heavydetail.app/heavy-detail.db`
+- **Linux**: `~/.config/com.heavydetail.app/heavy-detail.db`
 - **macOS**: `~/Library/Application Support/com.heavydetail.app/heavy-detail.db`
 - **Windows**: `%APPDATA%\com.heavydetail.app\heavy-detail.db`
 

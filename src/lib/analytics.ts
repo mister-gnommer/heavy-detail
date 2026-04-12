@@ -1,3 +1,4 @@
+import { Temporal } from "@js-temporal/polyfill";
 import { linearRegression, linearRegressionLine } from "simple-statistics";
 import type { WeightEntry } from "./weightApi";
 
@@ -7,14 +8,18 @@ export interface ChartPoint {
   rollingAvg?: number;
 }
 
-/** Compute 7-day rolling average. Entries must be sorted ascending by date. */
-export function computeRollingAverage(
-  entries: WeightEntry[],
-  window = 7,
-): ChartPoint[] {
-  return entries.map((entry, i) => {
-    const start = Math.max(0, i - window + 1);
-    const slice = entries.slice(start, i + 1);
+/** Compute rolling average over a calendar day window. Entries must be sorted ascending by date. */
+export function computeRollingAverage(entries: WeightEntry[], windowDays = 7): ChartPoint[] {
+  return entries.map((entry) => {
+    const entryDate = Temporal.PlainDate.from(entry.date);
+    const windowStart = entryDate.subtract({ days: windowDays - 1 });
+    const slice = entries.filter((e) => {
+      const date = Temporal.PlainDate.from(e.date);
+      return (
+        Temporal.PlainDate.compare(date, windowStart) >= 0 &&
+        Temporal.PlainDate.compare(date, entryDate) <= 0
+      );
+    });
     const avg = slice.reduce((sum, e) => sum + e.weight_kg, 0) / slice.length;
     return {
       date: entry.date,
@@ -24,41 +29,52 @@ export function computeRollingAverage(
   });
 }
 
-/**
- * Predict when weight will reach goalKg using linear regression on recent entries.
- * Returns null if not enough data or trend is not heading toward the goal.
- */
+export enum GoalPredictionKind {
+  Predicted = "predicted",
+  InsufficientData = "insufficient_data",
+  FlatTrend = "flat_trend",
+  WrongDirection = "wrong_direction",
+}
+
+export type GoalPrediction =
+  | { kind: GoalPredictionKind.Predicted; date: Temporal.PlainDate }
+  | { kind: GoalPredictionKind.InsufficientData }
+  | { kind: GoalPredictionKind.FlatTrend }
+  | { kind: GoalPredictionKind.WrongDirection };
+
+/** Predict when weight will reach goalKg using linear regression on recent entries. */
 export function predictGoalDate(
   entries: WeightEntry[],
   goalKg: number,
-  lookbackDays = 30,
-): Date | null {
-  const clampedDays = Math.min(30, Math.max(14, lookbackDays));
-  const recent = entries.slice(-clampedDays);
-  if (recent.length < 3) return null;
+  lookbackDays = 30
+): GoalPrediction {
+  const cutoff = Temporal.Now.plainDateISO().subtract({ days: lookbackDays });
+  const recent = entries.filter(
+    (e) => Temporal.PlainDate.compare(Temporal.PlainDate.from(e.date), cutoff) >= 0
+  );
+  if (recent.length < 3) {
+    return { kind: GoalPredictionKind.InsufficientData };
+  }
 
-  const t0 = new Date(recent[0].date).getTime();
+  const t0 = Temporal.PlainDate.from(recent[0].date);
   const points: [number, number][] = recent.map((e) => [
-    (new Date(e.date).getTime() - t0) / 86_400_000,
+    t0.until(Temporal.PlainDate.from(e.date)).days,
     e.weight_kg,
   ]);
 
   const { m, b } = linearRegression(points);
-  if (m === 0) return null;
-
+  if (m === 0) {
+    return { kind: GoalPredictionKind.FlatTrend };
+  }
   const line = linearRegressionLine({ m, b });
-  const currentPredicted = line(points[points.length - 1][0]);
+  // Safe: recent.length >= 3 checked above, so points is non-empty
+  const currentPredicted = line(points.at(-1)![0]);
   const isTrendingTowardGoal =
     (m < 0 && goalKg < currentPredicted) || (m > 0 && goalKg > currentPredicted);
-  if (!isTrendingTowardGoal) return null;
+  if (!isTrendingTowardGoal) {
+    return { kind: GoalPredictionKind.WrongDirection };
+  }
 
   const daysToGoal = (goalKg - b) / m;
-  if (daysToGoal < 0) return null;
-
-  return new Date(t0 + daysToGoal * 86_400_000);
-}
-
-export function currentTrendWeight(points: ChartPoint[]): number | null {
-  if (!points.length) return null;
-  return points[points.length - 1].rollingAvg ?? null;
+  return { kind: GoalPredictionKind.Predicted, date: t0.add({ days: Math.ceil(daysToGoal) }) };
 }

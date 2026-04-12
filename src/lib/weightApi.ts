@@ -9,17 +9,15 @@ export interface WeightEntry {
 
 export async function addEntry(date: string, weight_kg: number): Promise<void> {
   const db = await getDb();
-  await db.execute(
-    "INSERT OR REPLACE INTO weight_entries (date, weight_kg) VALUES (?, ?)",
-    [date, weight_kg],
-  );
+  await db.execute("INSERT OR REPLACE INTO weight_entries (date, weight_kg) VALUES (?, ?)", [
+    date,
+    weight_kg,
+  ]);
 }
 
 export async function getAllEntries(): Promise<WeightEntry[]> {
   const db = await getDb();
-  return db.select<WeightEntry[]>(
-    "SELECT * FROM weight_entries ORDER BY date DESC",
-  );
+  return db.select<WeightEntry[]>("SELECT * FROM weight_entries ORDER BY date DESC");
 }
 
 export async function deleteEntry(id: number): Promise<void> {
@@ -33,6 +31,6 @@ export async function getRecentEntries(days: number): Promise<WeightEntry[]> {
     `SELECT * FROM weight_entries
      WHERE date >= date('now', ?)
      ORDER BY date ASC`,
-    [`-${days} days`],
+    [`-${days} days`]
   );
 }

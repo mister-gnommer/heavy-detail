@@ -65,11 +65,16 @@ Weight entries are stored in a SQLite database at:
 
 The `.db` file is excluded from this repository.
 
+## Architecture notes
+
+Database access is handled via `tauri-plugin-sql` directly from TypeScript (`src/lib/db.ts`, `src/lib/weightApi.ts`). This was a deliberate initial choice to avoid Rust boilerplate for a simple CRUD schema. The idiomatic Tauri approach would be to move queries into Rust commands — tracked in TODO below.
+
 ## TODO
 
 - tests
 - advanced stats:
   - 0 to -7 average and diff vs -8 to -14
+- move DB logic to rust
 
 ## License
 

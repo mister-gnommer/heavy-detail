@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { predictGoalDate } from "../lib/analytics";
+import { Temporal } from "@js-temporal/polyfill";
+import { predictGoalDate, GoalPredictionKind, type GoalPrediction } from "../lib/analytics";
 import type { WeightEntry } from "../lib/weightApi";
 
 interface Props {
@@ -9,24 +10,22 @@ interface Props {
 export default function GoalCard({ entries }: Props) {
   const [goalKg, setGoalKg] = useState("");
 
-  const goalDate =
-    goalKg && entries.length >= 3
-      ? predictGoalDate(entries, parseFloat(goalKg))
-      : null;
-
-  const formattedDate = goalDate
-    ? goalDate.toISOString().slice(0, 10)
-    : null;
-
-  const daysRemaining = goalDate
-    ? Math.ceil((goalDate.getTime() - Date.now()) / 86_400_000)
+  const prediction: GoalPrediction | null = goalKg
+    ? predictGoalDate(entries, parseFloat(goalKg))
     : null;
 
   const statusMessage = () => {
-    if (!goalKg) return null;
-    if (entries.length < 3) return "Need at least 3 entries";
-    if (!formattedDate) return "Trend not heading toward goal";
-    return `Estimated reach: ${formattedDate} (${daysRemaining}d)`;
+    if (!prediction) return null;
+    switch (prediction.kind) {
+      case GoalPredictionKind.Predicted: {
+        const date = prediction.date.toString();
+        const days = Temporal.Now.plainDateISO().until(prediction.date).days;
+        return `Estimated reach: ${date} (${days}d)`;
+      }
+      case GoalPredictionKind.InsufficientData: return "Not enough data yet";
+      case GoalPredictionKind.FlatTrend:        return "Trend is flat — no goal date possible";
+      case GoalPredictionKind.WrongDirection:   return "Trend is not heading toward goal";
+    }
   };
 
   return (

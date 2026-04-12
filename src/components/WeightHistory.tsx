@@ -5,7 +5,7 @@ import { queryKeys } from "../lib/queryKeys";
 
 export default function WeightHistory() {
   const queryClient = useQueryClient();
-
+//TODO alow sorting and filtering, save pref in local storage (is what I'd do in standard web app, not sure what is approach in Tauri)
   const { data: entries = [], isLoading } = useQuery({
     queryKey: queryKeys.entries.all,
     queryFn: getAllEntries,

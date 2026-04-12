@@ -4,8 +4,8 @@ interface Props {
 }
 
 export default function TrendCard({ scaleWeight, trendWeight }: Props) {
-  const diff = trendWeight != null ? scaleWeight - trendWeight : null;
-  const isAbove = diff !== null && diff > 0;
+  const diff = trendWeight !== null ? scaleWeight - trendWeight : null;
+  
 
   return (
     <div
@@ -24,8 +24,8 @@ export default function TrendCard({ scaleWeight, trendWeight }: Props) {
             <span
               className="text-xs font-semibold px-1.5 py-0.5 rounded"
               style={{
-                backgroundColor: isAbove ? "hsl(0 84.2% 95%)" : "hsl(142 76% 95%)",
-                color: isAbove ? "var(--color-destructive)" : "hsl(142 76% 36%)",
+                backgroundColor: diff > 0 ? "hsl(0 84.2% 95%)" : "hsl(142 76% 95%)",
+                color: diff > 0 ? "var(--color-destructive)" : "hsl(142 76% 36%)",
               }}
             >
               {diff > 0 ? "+" : ""}{diff.toFixed(1)}

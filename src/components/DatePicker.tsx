@@ -16,9 +16,16 @@ export default function DatePicker({ value, onChange, max }: Props) {
   const selected = value ? parse(value, "yyyy-MM-dd", new Date()) : undefined;
   const maxDate = max ? parse(max, "yyyy-MM-dd", new Date()) : undefined;
 
+  const handleSelect = (day: Date | undefined) => {
+    if (day) {
+      onChange(format(day, "yyyy-MM-dd"));
+      setOpen(false);
+    }
+  };
+
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (e.target instanceof Node && containerRef.current && !containerRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
@@ -59,12 +66,7 @@ export default function DatePicker({ value, onChange, max }: Props) {
           <DayPicker
             mode="single"
             selected={isValid(selected) ? selected : undefined}
-            onSelect={(day) => {
-              if (day) {
-                onChange(format(day, "yyyy-MM-dd"));
-                setOpen(false);
-              }
-            }}
+            onSelect={handleSelect}
             disabled={maxDate ? { after: maxDate } : undefined}
             defaultMonth={isValid(selected) ? selected : new Date()}
           />

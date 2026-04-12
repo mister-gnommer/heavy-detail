@@ -65,6 +65,12 @@ Weight entries are stored in a SQLite database at:
 
 The `.db` file is excluded from this repository.
 
+## TODO
+
+- tests
+- advanced stats:
+  - 0 to -7 average and diff vs -8 to -14
+
 ## License
 
 MIT

@@ -33,8 +33,8 @@ export default function Nav({ activeView, onViewChange }: Props) {
             className={[
               "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
               activeView === view
-                ? "text-[var(--color-primary-foreground)] bg-[var(--color-primary)]"
-                : "hover:bg-[var(--color-secondary)] text-[var(--color-foreground)]",
+                ? "text-primary-foreground bg-(--color-primary)"
+                : "hover:bg-(--color-secondary) text-(--color-foreground)",
             ].join(" ")}
           >
             <Icon className="h-4 w-4" />

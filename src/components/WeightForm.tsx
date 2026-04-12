@@ -22,7 +22,7 @@ export default function WeightForm({ onSaved }: Props) {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!weight || isNaN(parseFloat(weight))) return;
     mutation.mutate();

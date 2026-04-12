@@ -15,12 +15,19 @@ export default function GoalCard({ entries }: Props) {
       : null;
 
   const formattedDate = goalDate
-    ? goalDate.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
+    ? goalDate.toISOString().slice(0, 10)
     : null;
+
+  const daysRemaining = goalDate
+    ? Math.ceil((goalDate.getTime() - Date.now()) / 86_400_000)
+    : null;
+
+  const statusMessage = () => {
+    if (!goalKg) return null;
+    if (entries.length < 3) return "Need at least 3 entries";
+    if (!formattedDate) return "Trend not heading toward goal";
+    return `Estimated reach: ${formattedDate} (${daysRemaining}d)`;
+  };
 
   return (
     <div
@@ -43,7 +50,7 @@ export default function GoalCard({ entries }: Props) {
             id="goal"
             type="number"
             step="0.5"
-            placeholder="e.g. 75.0"
+            placeholder="e.g. 102.5"
             value={goalKg}
             onChange={(e) => setGoalKg(e.target.value)}
             className="w-36 rounded-md border px-3 py-1.5 text-sm outline-none focus:ring-2"
@@ -54,21 +61,8 @@ export default function GoalCard({ entries }: Props) {
             }}
           />
         </div>
-        {goalKg && (
-          <p className="text-sm">
-            {formattedDate ? (
-              <>
-                Estimated reach:{" "}
-                <span className="font-semibold">{formattedDate}</span>
-              </>
-            ) : (
-              <span style={{ color: "var(--color-muted-foreground)" }}>
-                {entries.length < 3
-                  ? "Need at least 3 entries"
-                  : "Trend not heading toward goal"}
-              </span>
-            )}
-          </p>
+        {statusMessage() && (
+          <p className="text-sm">{statusMessage()}</p>
         )}
       </div>
     </div>

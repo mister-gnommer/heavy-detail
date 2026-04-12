@@ -43,8 +43,9 @@ export default function Dashboard() {
     );
   }
 
-  const latestEntry = allEntries[allEntries.length - 1];
-  const latestRolling = chartData[chartData.length - 1]?.rollingAvg ?? null;
+  // Safe: allEntries.length === 0 is handled by the early return above
+  const latestEntry = allEntries.at(-1)!;
+  const latestRolling = chartData.at(-1)?.rollingAvg ?? null;
 
   return (
     <div className="space-y-6">

@@ -69,14 +69,27 @@ The `.db` file is excluded from this repository.
 
 Database access is handled via `tauri-plugin-sql` directly from TypeScript (`src/lib/db.ts`, `src/lib/weightApi.ts`). This was a deliberate initial choice to avoid Rust boilerplate for a simple CRUD schema. The idiomatic Tauri approach would be to move queries into Rust commands — tracked in TODO below.
 
+## Tests
+
+```bash
+npm test              # run once
+npm run test:watch    # watch mode
+npm run test:coverage # coverage report
+```
+
+Tests cover `analytics.ts` (unit), `utils.ts` (unit), and all components (RTL). The suite is comprehensive and partially AI-generated — it serves as guardrails to keep everything working across future refactors and the planned Rust migration, not as documentation of intentional design. Some tests (e.g. `utils.ts`) cover trivial behaviour; that is by design.
+
+`weightApi.ts` and `db.ts` are intentionally untested: they have no business logic and depend on the Tauri native runtime.
+
 ## TODO
 
-- tests
+- automate test running (husky pre-commit? on build? TBD)
 - advanced stats:
   - 0 to -7 average and diff vs -8 to -14
 - move DB logic to rust
 - handle both `.` and `,` as decimal separator in weight input
 - WeightHistory: allow sorting and filtering entries, persist preference (need to decide: localStorage vs Tauri store plugin)
+- /components/ is getting messy
 
 ## License
 

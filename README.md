@@ -75,6 +75,8 @@ Database access is handled via `tauri-plugin-sql` directly from TypeScript (`src
 - advanced stats:
   - 0 to -7 average and diff vs -8 to -14
 - move DB logic to rust
+- handle both `.` and `,` as decimal separator in weight input
+- WeightHistory: allow sorting and filtering entries, persist preference (need to decide: localStorage vs Tauri store plugin)
 
 ## License
 

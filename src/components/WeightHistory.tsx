@@ -59,7 +59,7 @@ export default function WeightHistory() {
                       className="rounded p-1 transition-colors hover:bg-red-100"
                       aria-label="Delete entry"
                     >
-                      <Trash2 className="h-4 w-4" style={{ color: "var(--color-destructive)" }} />
+                      <Trash2 className="h-4 w-4" style={{ color: "var(--color-not-good)" }} />
                     </button>
                   </td>
                 </tr>

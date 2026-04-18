@@ -12,8 +12,11 @@
   --color-muted: hsl(240 4.8% 95.9%);
   --color-muted-foreground: hsl(240 3.8% 46.1%);
   --color-border: hsl(240 5.9% 90%);
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-not-good: hsl(0 84.2% 60.2%);
+  --color-not-good-foreground: hsl(0 0% 98%);
+  --color-not-good-bg: hsl(0 84.2% 95%);
+  --color-good: hsl(142 76% 36%);
+  --color-good-bg: hsl(142 76% 95%);
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
@@ -32,8 +35,8 @@
     --color-muted: hsl(240 3.7% 15.9%);
     --color-muted-foreground: hsl(240 5% 64.9%);
     --color-border: hsl(240 3.7% 15.9%);
-    --color-destructive: hsl(0 62.8% 30.6%);
-    --color-destructive-foreground: hsl(0 0% 98%);
+    --color-not-good: hsl(0 62.8% 30.6%);
+    --color-not-good-foreground: hsl(0 0% 98%);
   }
 }
 

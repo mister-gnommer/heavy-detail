@@ -30,6 +30,7 @@ export default function Nav({ activeView, onViewChange }: Props) {
           <button
             key={view}
             onClick={() => onViewChange(view)}
+            aria-current={activeView === view ? "page" : undefined}
             className={[
               "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
               activeView === view

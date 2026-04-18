@@ -24,8 +24,8 @@ export default function TrendCard({ scaleWeight, trendWeight }: Props) {
             <span
               className="text-xs font-semibold px-1.5 py-0.5 rounded"
               style={{
-                backgroundColor: diff > 0 ? "hsl(0 84.2% 95%)" : "hsl(142 76% 95%)",
-                color: diff > 0 ? "var(--color-destructive)" : "hsl(142 76% 36%)",
+                backgroundColor: diff > 0 ? "var(--color-not-good-bg)" : "var(--color-good-bg)",
+                color: diff > 0 ? "var(--color-not-good)" : "var(--color-good)",
               }}
             >
               {diff > 0 ? "+" : ""}{diff.toFixed(1)}

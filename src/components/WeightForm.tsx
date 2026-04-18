@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Temporal } from "@js-temporal/polyfill";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addEntry } from "../lib/weightApi";
 import { queryKeys } from "../lib/queryKeys";
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export default function WeightForm({ onSaved }: Props) {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = Temporal.Now.plainDateISO().toString();
   const [date, setDate] = useState(today);
   const [weight, setWeight] = useState("");
   const queryClient = useQueryClient();
@@ -85,7 +86,7 @@ export default function WeightForm({ onSaved }: Props) {
             {mutation.isPending ? "Saving…" : "Save Entry"}
           </button>
           {mutation.isError && (
-            <p className="text-sm" style={{ color: "var(--color-destructive)" }}>
+            <p className="text-sm" style={{ color: "var(--color-not-good)" }}>
               Failed to save. Try again.
             </p>
           )}

@@ -86,10 +86,15 @@ Tests cover `analytics.ts` (unit), `utils.ts` (unit), and all components (RTL). 
 - automate test running (husky pre-commit? on build? TBD)
 - advanced stats:
   - 0 to -7 average and diff vs -8 to -14
+  - show/calculate 3 different stat windows (7, 14, and 30 days by default)
+- add settings tab and allow user to configure stat window sizes
+- in settings tab: export/import data (CSV or JSON)
+- in settings tab: allow changing the database file path
 - move DB logic to rust
 - handle both `.` and `,` as decimal separator in weight input
 - WeightHistory: allow sorting and filtering entries, persist preference (need to decide: localStorage vs Tauri store plugin)
 - /components/ is getting messy
+- change favicon/app icon
 
 ## License
 

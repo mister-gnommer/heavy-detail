@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "heavy-detail",
+  "productName": "Heavy Detail",
   "version": "0.1.0",
   "identifier": "com.heavydetail.app",
   "build": {

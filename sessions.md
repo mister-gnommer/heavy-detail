@@ -6,3 +6,4 @@
 - `77a42d84-c9be-46d5-bf9f-52ac14b864c8` — 2026-04-18 — Review new Vitest test suite for correctness, coverage gaps, and fragility
 - `7181d506-bcfe-49a1-b71a-c6ad2c2922b1` — 2026-04-18 — Pragmatic code review of new Vitest test files
 - `fca26935-cb52-4e9d-8aa2-d01c7be4ea62` — 2026-04-18 — Fix test bugs, refactor helpers, rename CSS vars, improve test quality
+- `31d6cb59-b933-4eb7-941a-3ef3bbb4a93e` — 2026-04-19 — Add todos: multi-window stats (7/14/30 days) and settings tab for configuring stat windows

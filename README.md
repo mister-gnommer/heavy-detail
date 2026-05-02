@@ -1,6 +1,6 @@
 # heavy-detail
 
-> **NOTICE: This project was entirely AI-generated (Claude Sonnet 4.6 via Claude Code) and has not yet been human-reviewed. It will be reviewed and cleaned up when the author finds the time. Use at your own risk.**
+> **NOTICE: This project was AI-assisted (Claude Sonnet 4.6 via Claude Code) and has been reviewed by a human.**
 
 A local-first desktop app for tracking body weight and analyzing trends. Built with Tauri 2.0.
 

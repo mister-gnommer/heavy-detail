@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
+  "permission": {
+    "bash": {
+      "npm test *": "allow",
+      "npx vitest *": "allow",
+      "npm run tauri *": "allow"
+    }
+  }
+}

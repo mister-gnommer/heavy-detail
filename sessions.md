@@ -1,4 +1,6 @@
-# Sessions
+# Session Log
+
+## Claude Code (original build, 2026-04-11 through 2026-04-19)
 
 - `4eec7143-1fb8-490e-85fe-c464c4093f1d` — 2026-04-11 — Build Tauri 2.0 weight trend analyzer app (React + Vite + Tailwind + SQLite)
 - `023a98c5-ecbe-48a4-86bd-06793d66be9d` — 2026-04-11 — Resume: continue work on heavy-detail weight tracker
@@ -7,3 +9,5 @@
 - `7181d506-bcfe-49a1-b71a-c6ad2c2922b1` — 2026-04-18 — Pragmatic code review of new Vitest test files
 - `fca26935-cb52-4e9d-8aa2-d01c7be4ea62` — 2026-04-18 — Fix test bugs, refactor helpers, rename CSS vars, improve test quality
 - `31d6cb59-b933-4eb7-941a-3ef3bbb4a93e` — 2026-04-19 — Add todos: multi-window stats (7/14/30 days) and settings tab for configuring stat windows
+
+## Open Code (continued development, 2026-05-16 onward)

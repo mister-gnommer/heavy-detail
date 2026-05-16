@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cn } from "./utils";
+import { cn, parseDecimal } from "./utils";
 
 describe("cn", () => {
   it("merges class strings", () => {
@@ -20,5 +20,23 @@ describe("cn", () => {
 
   it("returns empty string when called with no arguments", () => {
     expect(cn()).toBe("");
+  });
+});
+
+describe("parseDecimal", () => {
+  it("parses dot decimal separator", () => {
+    expect(parseDecimal("82.5")).toBe(82.5);
+  });
+
+  it("parses comma decimal separator", () => {
+    expect(parseDecimal("82,5")).toBe(82.5);
+  });
+
+  it("parses integer weight", () => {
+    expect(parseDecimal("80")).toBe(80);
+  });
+
+  it("parses weight with leading/trailing whitespace", () => {
+    expect(parseDecimal(" 82.5 ")).toBe(82.5);
   });
 });

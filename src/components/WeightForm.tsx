@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Temporal } from "@js-temporal/polyfill";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addEntry } from "../lib/weightApi";
+import { parseDecimal } from "../lib/utils";
 import { queryKeys } from "../lib/queryKeys";
 import DatePicker from "./DatePicker";
 
@@ -16,7 +17,7 @@ export default function WeightForm({ onSaved }: Props) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: () => addEntry(date, parseFloat(weight)),
+    mutationFn: () => addEntry(date, parseDecimal(weight)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.entries.all });
       onSaved();
@@ -25,7 +26,7 @@ export default function WeightForm({ onSaved }: Props) {
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    if (!weight || isNaN(parseFloat(weight))) return;
+    if (!weight || isNaN(parseDecimal(weight))) return;
     mutation.mutate();
   };
 
@@ -58,10 +59,8 @@ export default function WeightForm({ onSaved }: Props) {
             </label>
             <input
               id="weight"
-              type="number"
-              step="0.1"
-              min="20"
-              max="500"
+              type="text"
+              inputMode="decimal"
               placeholder="e.g. 82.5"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}

@@ -88,4 +88,20 @@ describe("GoalCard", () => {
     await userEvent.type(input, "75");
     expect(screen.getByText(/Estimated reach:/)).toBeInTheDocument();
   });
+
+  it("accepts comma as decimal separator in goal input", async () => {
+    const entries = makeEntries([
+      ["2025-05-25", 85],
+      ["2025-05-26", 84.5],
+      ["2025-05-27", 84],
+      ["2025-05-28", 83.5],
+      ["2025-05-29", 83],
+      ["2025-05-30", 82.5],
+      ["2025-05-31", 82],
+    ]);
+    render(<GoalCard entries={entries} />);
+    await userEvent.type(screen.getByLabelText("Goal weight (kg)"), "80,5");
+    const msg = screen.getByText(/Estimated reach:/);
+    expect(msg).toBeInTheDocument();
+  });
 });

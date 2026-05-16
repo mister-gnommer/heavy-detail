@@ -91,7 +91,6 @@ Tests cover `analytics.ts` (unit), `utils.ts` (unit), and all components (RTL). 
 - in settings tab: export/import data (CSV or JSON)
 - in settings tab: allow changing the database file path
 - move DB logic to rust
-- handle both `.` and `,` as decimal separator in weight input
 - WeightHistory: allow sorting and filtering entries, persist preference (need to decide: localStorage vs Tauri store plugin)
 - /components/ is getting messy
 - change favicon/app icon

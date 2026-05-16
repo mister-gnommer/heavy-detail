@@ -53,6 +53,17 @@ describe("WeightForm", () => {
     expect(weightApi.addEntry).toHaveBeenCalledWith(today, 82.5);
   });
 
+  it("accepts comma as decimal separator", async () => {
+    vi.mocked(weightApi.addEntry).mockResolvedValue(undefined);
+    const onSaved = vi.fn();
+    render(<WeightForm onSaved={onSaved} />, { wrapper });
+    await userEvent.type(screen.getByLabelText("Weight (kg)"), "82,5");
+    await userEvent.click(screen.getByRole("button", { name: "Save Entry" }));
+    await waitFor(() => expect(onSaved).toHaveBeenCalledOnce());
+    const today = Temporal.Now.plainDateISO().toString();
+    expect(weightApi.addEntry).toHaveBeenCalledWith(today, 82.5);
+  });
+
   it("shows Saving… and disables button while mutation is pending", async () => {
     let resolve: () => void; // assigned inside Promise constructor; TS can't prove it, hence ! at call site
     vi.mocked(weightApi.addEntry).mockReturnValue(

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Temporal } from "@js-temporal/polyfill";
 import { predictGoalDate, GoalPredictionKind, type GoalPrediction } from "../lib/analytics";
+import { parseDecimal } from "../lib/utils";
 import type { WeightEntry } from "../lib/weightApi";
 
 interface Props {
@@ -11,7 +12,7 @@ export default function GoalCard({ entries }: Props) {
   const [goalKg, setGoalKg] = useState("");
 
   const prediction: GoalPrediction | null = goalKg
-    ? predictGoalDate(entries, parseFloat(goalKg))
+    ? predictGoalDate(entries, parseDecimal(goalKg))
     : null;
 
   const statusMessage = () => {
@@ -47,8 +48,8 @@ export default function GoalCard({ entries }: Props) {
           </label>
           <input
             id="goal"
-            type="number"
-            step="0.5"
+            type="text"
+            inputMode="decimal"
             placeholder="e.g. 102.5"
             value={goalKg}
             onChange={(e) => setGoalKg(e.target.value)}

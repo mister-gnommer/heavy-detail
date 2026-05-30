@@ -94,6 +94,7 @@ Tests cover `analytics.ts` (unit), `utils.ts` (unit), and all components (RTL). 
 - WeightHistory: allow sorting and filtering entries, persist preference (need to decide: localStorage vs Tauri store plugin)
 - /components/ is getting messy
 - change favicon/app icon
+- include app version number on main dashboard/view
 
 ## License
 

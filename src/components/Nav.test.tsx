@@ -4,11 +4,12 @@ import userEvent from "@testing-library/user-event";
 import Nav from "./Nav";
 
 describe("Nav", () => {
-  it("renders all three navigation labels", () => {
+  it("renders all navigation labels", () => {
     render(<Nav activeView="dashboard" onViewChange={vi.fn()} />);
     expect(screen.getByText("Dashboard")).toBeInTheDocument();
     expect(screen.getByText("Log")).toBeInTheDocument();
     expect(screen.getByText("History")).toBeInTheDocument();
+    expect(screen.getByText("Settings")).toBeInTheDocument();
   });
 
   it("renders the brand name", () => {

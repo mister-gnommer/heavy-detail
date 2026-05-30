@@ -1,4 +1,4 @@
-import { Scale, PlusCircle, List } from "lucide-react";
+import { Scale, PlusCircle, List, Settings } from "lucide-react";
 import type { View } from "../App";
 
 interface NavItem {
@@ -11,6 +11,7 @@ const navItems: NavItem[] = [
   { view: "dashboard", label: "Dashboard", Icon: Scale },
   { view: "log", label: "Log", Icon: PlusCircle },
   { view: "history", label: "History", Icon: List },
+  { view: "settings", label: "Settings", Icon: Settings },
 ];
 
 interface Props {

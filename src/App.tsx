@@ -3,8 +3,9 @@ import Nav from "./components/Nav";
 import Dashboard from "./components/Dashboard";
 import WeightForm from "./components/WeightForm";
 import WeightHistory from "./components/WeightHistory";
+import Settings from "./components/Settings";
 
-export type View = "dashboard" | "log" | "history";
+export type View = "dashboard" | "log" | "history" | "settings";
 
 export default function App() {
   const [view, setView] = useState<View>("dashboard");
@@ -16,6 +17,7 @@ export default function App() {
         {view === "dashboard" && <Dashboard />}
         {view === "log" && <WeightForm onSaved={() => setView("dashboard")} />}
         {view === "history" && <WeightHistory />}
+        {view === "settings" && <Settings />}
       </main>
     </div>
   );

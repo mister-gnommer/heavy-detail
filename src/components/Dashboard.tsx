@@ -24,6 +24,9 @@ export default function Dashboard() {
 
   const chartData = computeRollingAverage(allEntries);
 
+  const formatTick = (timestamp: number) =>
+    new Date(timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
   if (isLoading) {
     return (
       <p className="text-center mt-8" style={{ color: "var(--color-muted-foreground)" }}>
@@ -60,13 +63,14 @@ export default function Dashboard() {
       >
         <h2 className="text-base font-semibold mb-4">Weight Over Time</h2>
         <ResponsiveContainer width="100%" height={320}>
-          <LineChart
-            data={chartData}
-            margin={{ top: 4, right: 16, left: 0, bottom: 4 }}
-          >
+          <LineChart data={chartData} margin={{ top: 4, right: 16, left: 0, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
             <XAxis
-              dataKey="date"
+              dataKey="timestamp"
+              type="number"
+              scale="time"
+              domain={["dataMin", "dataMax"]}
+              tickFormatter={formatTick}
               tick={{ fontSize: 11 }}
               interval="preserveStartEnd"
               stroke="var(--color-border)"
@@ -88,7 +92,6 @@ export default function Dashboard() {
               stroke="hsl(240 5.9% 60%)"
               dot={{ r: 3, fill: "hsl(240 5.9% 60%)" }}
               strokeWidth={1}
-              connectNulls
             />
             <Line
               type="monotone"
@@ -97,7 +100,6 @@ export default function Dashboard() {
               stroke="hsl(221 83% 53%)"
               dot={false}
               strokeWidth={2.5}
-              connectNulls
             />
           </LineChart>
         </ResponsiveContainer>

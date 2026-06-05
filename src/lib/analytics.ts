@@ -4,6 +4,7 @@ import type { WeightEntry } from "./weightApi";
 
 export interface ChartPoint {
   date: string;
+  timestamp: number;
   weight: number;
   rollingAvg?: number;
 }
@@ -23,6 +24,7 @@ export function computeRollingAverage(entries: WeightEntry[], windowDays = 7): C
     const avg = slice.reduce((sum, e) => sum + e.weight_kg, 0) / slice.length;
     return {
       date: entry.date,
+      timestamp: new Date(entry.date).getTime(),
       weight: entry.weight_kg,
       rollingAvg: parseFloat(avg.toFixed(2)),
     };

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Nav from "./Nav";
+import pkg from "../../src-tauri/tauri.conf.json";
 
 describe("Nav", () => {
   it("renders all three navigation labels", () => {
@@ -18,7 +19,7 @@ describe("Nav", () => {
 
   it("renders the app version", () => {
     render(<Nav activeView="dashboard" onViewChange={vi.fn()} />);
-    expect(screen.getByText("v0.1.0")).toBeInTheDocument();
+    expect(screen.getByText(`v${pkg.version}`)).toBeInTheDocument();
   });
 
   it("active button has aria-current set", () => {

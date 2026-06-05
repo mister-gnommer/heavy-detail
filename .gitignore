@@ -31,3 +31,6 @@ src-tauri/gen/
 *.db
 *.db-shm
 *.db-wal
+
+# Local DNF repo
+local-repo/

@@ -55,6 +55,27 @@ npm run tauri build
 
 Produces a native binary in `src-tauri/target/release/` and platform packages in `src-tauri/target/release/bundle/`.
 
+### Fedora/RHEL: local DNF repo
+
+To avoid manual reinstalls after each build, a local DNF repo can be set up so `sudo dnf update` picks up new builds automatically. This is optional and Fedora/RHEL-specific.
+
+```bash
+# one-time setup
+sudo dnf install createrepo_c
+sudo tee /etc/yum.repos.d/heavy-detail-local.repo <<EOF
+[heavy-detail-local]
+name=Heavy Detail (local builds)
+baseurl=file://$(pwd)/local-repo
+enabled=1
+gpgcheck=0
+EOF
+
+# after each build
+npm run sync-repo && sudo dnf update
+```
+
+`sync-repo` copies the latest `.rpm` into `local-repo/` and refreshes metadata. The `local-repo/` directory is gitignored.
+
 ## Data
 
 Weight entries are stored in a SQLite database at:

@@ -77,6 +77,13 @@ export default function Dashboard() {
             />
             <YAxis domain={["auto", "auto"]} tick={{ fontSize: 11 }} stroke="var(--color-border)" />
             <Tooltip
+              labelFormatter={(ts) =>
+                new Date(ts).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              }
               contentStyle={{
                 backgroundColor: "var(--color-card)",
                 border: "1px solid var(--color-border)",

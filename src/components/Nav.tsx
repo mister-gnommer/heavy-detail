@@ -42,6 +42,9 @@ export default function Nav({ activeView, onViewChange }: Props) {
             {label}
           </button>
         ))}
+        <span className="ml-auto text-xs" style={{ color: "var(--color-muted-foreground)" }}>
+          v{__APP_VERSION__}
+        </span>
       </div>
     </header>
   );

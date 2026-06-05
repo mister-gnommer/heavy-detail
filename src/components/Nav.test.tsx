@@ -16,6 +16,11 @@ describe("Nav", () => {
     expect(screen.getByText("Heavy Detail")).toBeInTheDocument();
   });
 
+  it("renders the app version", () => {
+    render(<Nav activeView="dashboard" onViewChange={vi.fn()} />);
+    expect(screen.getByText("v0.1.0")).toBeInTheDocument();
+  });
+
   it("active button has aria-current set", () => {
     render(<Nav activeView="log" onViewChange={vi.fn()} />);
     const logButton = screen.getByText("Log").closest("button");

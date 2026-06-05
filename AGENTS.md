@@ -22,3 +22,7 @@ A local-first Tauri 2.0 desktop app for tracking body weight and analyzing trend
 ## Attribution
 
 Follow code attribution rules in `~/.config/opencode/AGENTS.md`.
+
+## Versioning
+
+When making changes, bump the version in `src-tauri/tauri.conf.json` following semver. This is the single source of truth — the version is injected into the UI at build time.

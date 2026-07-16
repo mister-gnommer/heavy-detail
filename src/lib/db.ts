@@ -13,5 +13,11 @@ export async function getDb(): Promise<Database> {
       created_at TEXT    NOT NULL DEFAULT (datetime('now'))
     )
   `);
+  await _db.execute(`
+    CREATE TABLE IF NOT EXISTS config (
+      key   TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    )
+  `);
   return _db;
 }

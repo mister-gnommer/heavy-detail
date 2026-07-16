@@ -3,4 +3,5 @@ export const queryKeys = {
     all: ["entries"] as const,
     recent: (days: number) => ["entries", "recent", days] as const,
   },
+  config: ["config"] as const,
 };

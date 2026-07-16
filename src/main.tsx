@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
+import { getDb } from "./lib/db";
+import { seedDefaults } from "./lib/configApi";
 import "./index.css";
+
+getDb().then((db) => seedDefaults(db));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,5 +22,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

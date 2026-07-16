@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Temporal } from "@js-temporal/polyfill";
 import { predictGoalDate, GoalPredictionKind, type GoalPrediction } from "../lib/analytics";
+import { useConfig } from "../lib/configApi";
 import { parseDecimal } from "../lib/utils";
 import type { WeightEntry } from "../lib/weightApi";
 
@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function GoalCard({ entries }: Props) {
-  const [goalKg, setGoalKg] = useState("");
+  const { getString, setValue } = useConfig();
+  const goalKg = getString("goal_weight_kg", "");
 
   const prediction: GoalPrediction | null = goalKg
     ? predictGoalDate(entries, parseDecimal(goalKg))
@@ -23,9 +24,12 @@ export default function GoalCard({ entries }: Props) {
         const days = Temporal.Now.plainDateISO().until(prediction.date).days;
         return `Estimated reach: ${date} (${days}d)`;
       }
-      case GoalPredictionKind.InsufficientData: return "Not enough data yet";
-      case GoalPredictionKind.FlatTrend:        return "Trend is flat — no goal date possible";
-      case GoalPredictionKind.WrongDirection:   return "Trend is not heading toward goal";
+      case GoalPredictionKind.InsufficientData:
+        return "Not enough data yet";
+      case GoalPredictionKind.FlatTrend:
+        return "Trend is flat — no goal date possible";
+      case GoalPredictionKind.WrongDirection:
+        return "Trend is not heading toward goal";
     }
   };
 
@@ -52,7 +56,7 @@ export default function GoalCard({ entries }: Props) {
             inputMode="decimal"
             placeholder="e.g. 102.5"
             value={goalKg}
-            onChange={(e) => setGoalKg(e.target.value)}
+            onChange={(e) => setValue("goal_weight_kg", e.target.value)}
             className="w-36 rounded-md border px-3 py-1.5 text-sm outline-none focus:ring-2"
             style={{
               borderColor: "var(--color-border)",
@@ -61,9 +65,10 @@ export default function GoalCard({ entries }: Props) {
             }}
           />
         </div>
-        {statusMessage() && (
-          <p className="text-sm">{statusMessage()}</p>
-        )}
+        {(() => {
+          const msg = statusMessage();
+          return msg && <p className="text-sm">{msg}</p>;
+        })()}
       </div>
     </div>
   );

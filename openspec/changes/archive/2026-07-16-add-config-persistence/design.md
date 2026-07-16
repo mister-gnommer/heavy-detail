@@ -39,7 +39,7 @@ The app currently has one SQLite table (`weight_entries`) and no mechanism for p
 
 **Decision**: New file `src/lib/configApi.ts` with a `DEFAULTS` map, `seedDefaults(db)`, `getAllConfig()`, `setConfig(key, value)`, typed accessors (`getConfigString`, `getConfigNumber`), and a `useConfig()` hook.
 
-**Rationale**: Colocating the DEFAULTS map, seeding, reads, writes, and the React hook in one module keeps all config concerns together. `db.ts` only invokes `seedDefaults` after table creation — it knows nothing about what keys exist.
+**Rationale**: Colocating the DEFAULTS map, seeding, reads, writes, and the React hook in one module keeps all config concerns together. `main.tsx` invokes `seedDefaults` after `getDb()` resolves — `db.ts` knows nothing about what config keys exist; it only creates the schema.
 
 ### GoalCard migration: useState → useConfig
 
